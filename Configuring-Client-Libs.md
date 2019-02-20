@@ -17,7 +17,7 @@ Default config:
 }
 ```
 
-The configurable parameters are as follow (see [Mock vs. non-mock](.) for more information):
+The configurable parameters are as follow (see [Mock vs. non-mock](./Mock-vs.-non-mock) for more information):
 
 -   `mock_unlimited_mutations`: switch off the default mutations limit in Mock Vault.
 -   `mock_in_memory_storage`: use memory store instead of file store in Mock Vault. It increases performance at the cost of permanent storage, so use this only if you're OK with losing all your data after an app shutdown. We use this setting for running tests.
