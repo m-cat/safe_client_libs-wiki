@@ -5,3 +5,4 @@
 ## Introductory concepts
 
 * [Configuring Client Libs](./Configuring-Client-Libs)
+* [Mock vs. non-mock](./Mock-vs.-non-mock)
