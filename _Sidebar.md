@@ -1,6 +1,6 @@
 # Knowledge Base
 
-[Home](./Home)
+* [Home](./Home)
 
 ## Introductory concepts
 
