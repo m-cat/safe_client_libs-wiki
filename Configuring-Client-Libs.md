@@ -1,5 +1,3 @@
-# Configuring SAFE Client Libs
-
 There are three configuration files relating to Crust, Routing, and SAFE Core.
 
 Most commonly, the configuration files can be found near the executable file and the file naming scheme follows the usual pattern from [`config_file_handler`](https://github.com/maidsafe/config_file_handler/) -- i.e., `<executable name>.<library name>.config`. That is, if your app executable name is `todo`, the config file would be named `todo.safe_core.config`.
