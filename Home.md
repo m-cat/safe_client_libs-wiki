@@ -26,6 +26,6 @@ cargo deps --all-deps --include-orphans --subgraph safe_app safe_app_jni safe_au
 
 </details>
 
-## Contributing
+## Contributing to this wiki
 
 Note that this this wiki is only directly editable by contributors, as all pages are expected to undergo a review process. If you wish to submit a page or make a change to the wiki, please raise an [Issue](https://github.com/maidsafe/safe_client_libs/issues/new) describing the change and we'll get on it!
