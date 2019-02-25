@@ -4,9 +4,16 @@ This is the official public knowledge base for Client Libs. Please use the sideb
 
 ## Crate graph
 
-This is how all the pieces of the MaidSafe backend stack fit together:
+This is how all the pieces of the MaidSafe backend stack fit together. Each arrow points from a crate to one of its dependencies.
 
 ![safe_app dependencies](safe-client-libs.png)
+
+**Legend:**
+* Box node: top-level crate (`safe_app`)
+* Black: normal dependencies
+* Blue: dev dependencies (`safe_app` -> `safe_authenticator`)
+* Purple: build dependencies (`safe_app` -> `safe_bindgen`)
+* Yellow: crates in Client Libs that `safe_app` does not depend on
 
 <details>
 <summary>More info</summary>
