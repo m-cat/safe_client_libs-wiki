@@ -31,10 +31,10 @@ The PR title and git commit messages should follow the format specified in [the 
 
 We are following the company-wide code style guide that you can find in the [the Rust Style document](https://github.com/maidsafe/QA/blob/master/Documentation/Rust%20Style.md). You should install `rustfmt` and `clippy` and run them automatically for each of your Git commits, and you should follow the common commit message style (for an example you can take a look at the list of commits in [our repository](https://github.com/maidsafe/safe_client_libs/commits/master).
 
-In addition to the common code style, we have our own [coding convention](./FFI+Calling+Conventions) that we use for the FFI (functions interfacing with other languages).
+In addition to the common code style, we have our own [coding convention](./FFI+calling+conventions) that we use for the FFI (functions interfacing with other languages).
 
 ### Running tests (CI script)
 
 Submitted PRs are expected to pass continuous integration (CI), which, among other things, runs a test suite on your PR to make sure that your code doesn't have any bugs.
 
-Please refer to the [Testing section](https://github.com/maidsafe/safe_client_libs#testing) and ensure you have appropriately and comprehensively run tests on your branch before submitting.
+Please refer to [Testing Client Libs](./Testing-Client-Libs) and ensure you have appropriately and comprehensively run tests on your branch before submitting.
