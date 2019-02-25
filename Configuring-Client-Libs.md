@@ -73,4 +73,4 @@ Default config:
 
 You can follow the [Routing documentation](https://docs.rs/routing/0.37.0/routing/struct.DevConfig.html) for an explanation of each configuration parameter.
 
-There's an important caveat related to the routing configuration that you need to be aware of: the *network size* must exactly match the network size defined on the vault size (i.e. in the `safe_vault.routing.config`). Otherwise, while performing basic network operations like creating an account, you might see some strange effects like hanging or 'freezing'. Refer to the dev forum thread ['Trying to build a global network'](https://forum.safedev.org/t/trying-to-build-a-global-network/2266) for a case study and more information.
+**Note:** the *network size* must exactly match the network size defined on the vault size (i.e. in the `safe_vault.routing.config`). Otherwise, while performing basic network operations like creating an account, you might see some strange effects like hanging or 'freezing'. Refer to the dev forum thread ['Trying to build a global network'](https://forum.safedev.org/t/trying-to-build-a-global-network/2266) for a case study and more information.
