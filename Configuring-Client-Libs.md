@@ -4,17 +4,9 @@ The following environment variables can be set to enable custom options. Each on
 
 **Note:** An environment variable is considered "set" if it is set to *any* value. It must be deleted (`unset` on Unix) in order for its setting to be disabled.
 
-### `SAFE_MOCK_UNLIMITED_MUTATIONS`
-
-If set, switch off the mutations limit in mock-vault. If SAFE Core is built with `--features=use-mock-routing`, then setting this option will allow an unlimited number of mutations.
-
-### `SAFE_MOCK_IN_MEMORY_STORAGE`
-
-If set, use a memory store instead of a file store in Mock Vault. If SAFE Core is built with `--features=use-mock-routing`, then setting this option will use Mock Vault's memory store, which is faster than reading/writing to disk.
-
-### `SAFE_MOCK_VAULT_PATH`
-
-If this is set and file storage is being used (`mock_in_memory_storage` is `false`), use this as the path for the `MockVault` file.
+* `SAFE_MOCK_UNLIMITED_MUTATIONS`: If set, switch off the mutations limit in mock-vault. If SAFE Core is built with `--features=use-mock-routing`, then setting this option will allow an unlimited number of mutations.
+* `SAFE_MOCK_IN_MEMORY_STORAGE`: If set, use a memory store instead of a file store in Mock Vault. If SAFE Core is built with `--features=use-mock-routing`, then setting this option will use Mock Vault's memory store, which is faster than reading/writing to disk.
+* `SAFE_MOCK_VAULT_PATH`: If this is set and file storage is being used (`mock_in_memory_storage` is `false`), use this as the path for the `MockVault` file.
 
 ## Configuration files
 
@@ -38,9 +30,9 @@ Default config:
 
 The configurable parameters are as follow (see [Mock vs. non-mock](./Mock-vs.-non-mock) for more information):
 
--   `mock_unlimited_mutations`: If `true`, switch off the default mutations limit in Mock Vault, allowing an unlimited number of mutations.
--   `mock_in_memory_storage`: If `true`, use memory store instead of file store in Mock Vault. It increases performance at the cost of permanent storage, so use this only if you're OK with losing all your data after an app shutdown. We use this setting for running tests.
--   `mock_vault_path`: If `true` and `mock_in_memory_storage` is `false`, set the Mock Vault storage path. Defaults to the system temporary directory.
+* `mock_unlimited_mutations`: If `true`, switch off the default mutations limit in Mock Vault, allowing an unlimited number of mutations.
+* `mock_in_memory_storage`: If `true`, use memory store instead of file store in Mock Vault. It increases performance at the cost of permanent storage, so use this only if you're OK with losing all your data after an app shutdown. We use this setting for running tests.
+* `mock_vault_path`: If `true` and `mock_in_memory_storage` is `false`, set the Mock Vault storage path. Defaults to the system temporary directory.
 
 ### \*.crust.config
 
