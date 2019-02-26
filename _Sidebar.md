@@ -9,3 +9,7 @@
 * [Mock vs. non-mock](./Mock-vs.-non-mock)
 * [Guide to contributing](./Guide-to-contributing)
 * [Testing Client Libs](./Testing-Client-Libs)
+
+## Development tools and CI
+
+* [Testing framework](./Testing-framework)
