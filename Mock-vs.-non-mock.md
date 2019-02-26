@@ -34,7 +34,7 @@ For more information on configuring the behavior of the mock libraries (e.g. lif
 
 You can use the `mock-routing-feature` to conditionally compile code only for the mock libraries. For example, you can configure code to either use the real `Routing` struct when compiled without `use-mock-routing`, or the the `MockRouting` struct, renamed as `Routing`, when `use-mock-routing` is enabled:
 
-```rs
+```rust
 #[cfg(feature = "use-mock-routing")]
 use self::mock::Routing;
 #[cfg(not(feature = "use-mock-routing"))]
@@ -53,7 +53,7 @@ A mock-only dependency can be included as per usual in the `Cargo.toml` file:
 
 But needs to be feature-gated in `lib.rs`:
 
-```rs
+```rust
 #[cfg(feature = "use-mock-routing")]
 #[macro_use]
 extern crate lazy_static;
@@ -63,7 +63,7 @@ extern crate lazy_static;
 
 You can configure certain modules to only be included for the mock libraries. The mock routing implementation itself is configured this way:
 
-```rs
+```rust
 #[cfg(feature = "use-mock-routing")]
 mod mock;
 ```
@@ -72,7 +72,7 @@ mod mock;
 
 You may want to define certain functions only for the mock libraries. For example, the following function, which adds custom hooks to Mock Routing to alter its behavior, will only be compiled if `use-mock-routing` is enabled AND tests are being run:
 
-```rs
+```rust
 #[cfg(all(feature = "use-mock-routing", any(test, feature = "testing")))]
 /// Allows customising the mock Routing client before registering a new account
 pub fn registered_with_hook<F>(
@@ -82,7 +82,7 @@ pub fn registered_with_hook<F>(
 
 Some tests should only be run on the mock libraries. Generally this applies to any test that simulates network operations, or which adds custom routing hooks.
 
-```rs
+```rust
 // Test simulating network disconnects.
 #[cfg(feature = "use-mock-routing")]
 #[test]
@@ -93,7 +93,7 @@ fn simulate_network_disconnect() {
 
 You may wish to publicly export an API only for the mock libraries, e.g. for testing purposes:
 
-```rs
+```rust
 #[cfg(feature = "use-mock-routing")]
 pub use self::client::{mock_vault_path, MockRouting};
 ```
