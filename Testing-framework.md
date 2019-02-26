@@ -8,7 +8,7 @@ Although Rust fully supports calling FFI functions with callbacks, usually it's 
 
 To simplify testing, we use a generic pattern to synchronously wait for the results to come back out of async functions. It can be generalised as follows:
 
-```rs
+```rust
 // We have the following API function defined somewhere in Client Libs:
 unsafe extern "C" fn some_ffi_fn_from_safe_app(
     user_data: *mut c_void,
@@ -52,7 +52,7 @@ Instead of setting up this pattern again and again, you can use [the `call_*` fa
 
 The manual code from above can now be significantly simplified:
 
-```rs
+```rust
 #[test]
 fn testing_ffi() {
     // call an FFI function and wait for the result
@@ -64,13 +64,13 @@ fn testing_ffi() {
 
 Generally, the usage of the above-mentioned functions follows the same pattern:
 
-```rs
+```rust
 call_*(|user_data, callback| ffi_function(user_data, ..., callback))`.
 ```
 
 Note that the compiler may complain that the type is unknown, in which case you'll need to add a type annotation. Here's a real example (note that the function `mdata_info_random_public` is unsafe, as are all of our FFI functions):
 
-```rs
+```rust
 let mdata_info: MDataInfo = unsafe { unwrap!(call_1(|ud, cb| mdata_info_random_public(type_tag, ud, cb))) };
 ```
 
@@ -78,7 +78,7 @@ let mdata_info: MDataInfo = unsafe { unwrap!(call_1(|ud, cb| mdata_info_random_p
 
 We allow the use of the `unwrap!` macro in tests if we expect an `Ok()` value, but you may also be testing error cases, in which case you can match on the error and expect `Err()`. Here's an example:
 
-```rs
+```rust
 let size: Result<u64, i32> = unsafe { call_1(|ud, cb| file_size(&app, write_h, ud, cb)) };
 match size {
     Err(code) if code == AppError::InvalidFileMode.error_code() => (),
@@ -97,19 +97,19 @@ SAFE Authenticator provides a number of test utilities for common test operation
 
 First you will need to create an authenticator instance. The quickest way to do this is with the `create_account_and_login()` function:
 
-```rs
+```rust
 let authenticator = test_utils::create_account_and_login();
 ```
 
 To authenticate an app, you first need an app. `test_utils` provides a function for creating test apps:
 
-```rs
+```rust
 let app = test_utils::rand_app();
 ```
 
 Then, you need to create an authentication request:
 
-```rs
+```rust
 let auth_req = AuthReq {
     app,
     app_container: false,
@@ -123,7 +123,7 @@ The `containers` field is the list of containers the app wishes to access and th
 
 We can now go ahead and authenticate the app:
 
-```rs
+```rust
 let auth_granted = unwrap!(test_utils::register_app(&authenticator, &auth_req));
 ```
 
@@ -131,7 +131,7 @@ let auth_granted = unwrap!(test_utils::register_app(&authenticator, &auth_req));
 
 Most functions that do anything useful (e.g. interacting with the network) require an Authenticator client as an input. To obtain a client that you can pass to these functions, use the `run` function:
 
-```rs
+```rust
 use access_container;
 
 let (entry_version, entries) = test_utils::run(&authenticator, |client| {
@@ -153,13 +153,13 @@ This is similar to running clients in Authenticator tests, with the main differe
 
 Here is an example from one of our tests. You'll first have to have created an app (affectionately called `app`):
 
-```rs
+```rust
 let app = test_utils::create_app();
 ```
 
 Now you can call `run`:
 
-```rs
+```rust
 let container_info = test_utils::run(&app, move |client, context| {
     context.get_access_info(client).then(move |res| {
         let mut access_info = unwrap!(res);
