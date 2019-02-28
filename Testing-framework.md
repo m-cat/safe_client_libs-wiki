@@ -42,7 +42,7 @@ fn testing_ffi() {
 }
 ```
 
-Instead of setting up this pattern again and again, you can use [the `call_*` family of functions](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/index.html) from the FFI Utils library. The following functions are available:
+Instead of setting up this pattern again and again, you can use [the `call_*` family of functions](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/index.html) from the FFI Utils library. The following functions are available:
 
 - [`call_0`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_0.html): calls and waits for an FFI function that returns no results.
 - [`call_1`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_1.html): same for an FFI function that returns a single result.
