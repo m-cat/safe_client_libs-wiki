@@ -44,11 +44,11 @@ fn testing_ffi() {
 
 Instead of setting up this pattern again and again, you can use [the `call_*` family of functions](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/index.html) from the FFI Utils library. The following functions are available:
 
-- [`call_0`](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/fn.call_0.html): calls and waits for an FFI function that returns no results.
-- [`call_1`](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/fn.call_1.html): same for an FFI function that returns a single result.
-- [`call_2`](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/fn.call_2.html): same for an FFI function with two outputs.
-- [`call_vec`](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/fn.call_vec.html): calls and waits for an FFI function that returns an array, copies the data into a vector, and returns it as a result.
-- [`call_vec_u8`](https://docs.rs/ffi_utils/0.11.0/ffi_utils/test_utils/fn.call_vec_u8.html): calls and waits for an FFI function that returns a string or a character array, copies the data into a `Vec<u8>`, and returns it as a result.
+- [`call_0`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_0.html): calls and waits for an FFI function that returns no results.
+- [`call_1`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_1.html): same for an FFI function that returns a single result.
+- [`call_2`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_2.html): same for an FFI function with two outputs.
+- [`call_vec`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_vec.html): calls and waits for an FFI function that returns an array, copies the data into a vector, and returns it as a result.
+- [`call_vec_u8`](https://docs.rs/ffi_utils/*/ffi_utils/test_utils/fn.call_vec_u8.html): calls and waits for an FFI function that returns a string or a character array, copies the data into a `Vec<u8>`, and returns it as a result.
 
 The manual code from above can now be significantly simplified:
 
