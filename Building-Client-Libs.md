@@ -12,7 +12,7 @@ rustup update stable
 
 ## Downloading Client Libs
 
-The Client Libs repository can be downloaded either as a zip archive from the [https://github.com/maidsafe/safe_client_libs](official repository) or by using Git:
+The Client Libs repository can be downloaded either as a zip archive from the [official repository](https://github.com/maidsafe/safe_client_libs) or by using Git:
 
 ```
 git clone https://github.com/maidsafe/safe_client_libs.git
@@ -40,7 +40,7 @@ cargo test --release
 
 ## Building for Mobile Platforms
 
-See [Manually building SCL for mobile targets](.)
+See [Building for mobile](./Building-for-mobile).
 
 ## Features
 
