@@ -35,28 +35,32 @@ It is comprised of **six** fields:
     - Shell: All the `MutableData` fields except `data`.
 
 -  `data`: The actual data, stored in the form of key-value pairs.
-    - Every `key` maps to a `value` that stores the data.
+    - Every key maps to a `Value` that stores the data.
     - Mutable data has a maximum limit of **1MB** or **1000 entries**.
-    - Every change to the `contents` field in Value is versioned and `entry_version` holds the latest version number.
+    - Every change to the `contents` field in `Value` is versioned and `entry_version` holds the latest version number.
     <br />
+
     ```rust
     pub struct Value {
         content: Vec<u8>,
         entry_version: u64,
     }
     ```
+
 - `permissions`: A permissions list consisting of `User` and `PermissionSet` pairs. The `User` is represented by a signing public key and can be an app, a person, and so on.
     -  The available permissions are Insert, Update, Delete and ManagePermissions.
-   - Permissions can be set either for specific applications with their public key or for anyone in general.
-       <br />
-       ```rust
-       pub struct PermissionSet {
-           insert: Option<bool>,
-           update: Option<bool>,
-           delete: Option<bool>,
-           manage_permissions: Option<bool>,
-       }
-       ```
+    - Permissions can be set either for specific applications with their public key or for anyone in general.
+    <br />
+
+    ```rust
+    pub struct PermissionSet {
+        insert: Option<bool>,
+        update: Option<bool>,
+        delete: Option<bool>,
+        manage_permissions: Option<bool>,
+    }
+    ```
+
 - `owners`: The list of users associated with the data, represented by public signing keys. 
     - These users always have full permissions with respect to the Mutable Data object and can mutate the permissions list. 
     - Currently only a single owner is supported. Apps cannot be set as owners and when adding a new Mutable Data to the network they must set this field to an owner's key.
