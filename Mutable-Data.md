@@ -40,7 +40,6 @@ It is comprised of **six** fields:
     - Every change to the `contents` field in Value is versioned and `entry_version` holds the latest version number.
     <br />
     ```rust
-    /// A value in MutableData
     pub struct Value {
         content: Vec<u8>,
         entry_version: u64,
