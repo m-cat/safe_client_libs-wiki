@@ -11,6 +11,10 @@
 * [Guide to contributing](./Guide-to-contributing)
 * [Testing Client Libs](./Testing-Client-Libs)
 
+## Core concepts
+
+* [Mutable Data](./Mutable-Data)
+
 ## Development tools and CI
 
 * [Testing framework](./Testing-framework)
