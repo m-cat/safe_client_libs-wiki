@@ -22,3 +22,4 @@
 ## Development tools and CI
 
 * [Testing framework](./Testing-framework)
+* [Binary compatibility tests](./Binary-compatibility-tests)
