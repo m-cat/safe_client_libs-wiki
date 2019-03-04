@@ -1,8 +1,4 @@
-# Client trait and implementations
-
-## What is it
-
-The `Client` trait provides an interface for self-authentication client implementations. Its implementors are the `CoreClient`, `AuthClient`, and `AppClient` structures. The trait provides functionality for interfacing all requests from high-level APIs to the actual routing layer, and for managing all interactions with it.
+The `Client` trait provides an interface for self-authentication client implementations. Its implementers are the `CoreClient`, `AuthClient`, and `AppClient` structures. The trait provides functionality for interfacing all requests from high-level APIs to the actual routing layer, and for managing all interactions with it.
 
 Clients are non-blocking, with an asynchronous API using the futures abstraction from the futures-rs crate.
 
@@ -14,25 +10,25 @@ It had to be in SAFE Core because it was used by both SAFE Auth and SAFE App, as
 
 Another problem with the old struct was that it required a type parameter for the context type. Only Clients in SAFE App had an associated context, which meant that Clients in SAFE Core and SAFE Auth always needed an unused type parameter: [example](https://github.com/maidsafe/safe_client_libs/blob/1a26890ca211bc0380b095e6468f8a0107b24e06/safe_core/src/utils/test_utils/mod.rs#L97). Clearly, this "one-size-fits-all" approach to the Client abstraction was not optimal.
 
-## The current structure
+## The current architecture
 
 What used to be a single struct has been split out into:
 
-- the `Client` trait, containing functionality common across SAFE Core, SAFE Auth, and SAFE App
-- the `ClientInner` struct, containing inner fields expected by the trait
-- a `CoreClient` implementing struct, a Client type used by SAFE Core in tests
-- an `AuthClient` implementor, the Client type used by SAFE Auth and providing functions like `register()` and `login()`
-- an `AppClient` implementor, the Client type used by SAFE App and providing functions like `unregistered()`
+- The `Client` trait, containing functionality common across SAFE Core, SAFE Auth, and SAFE App.
+- The `ClientInner` struct, containing inner fields expected by the trait.
+- A `CoreClient` implementing struct, a Client type used by SAFE Core in tests.
+- An `AuthClient` implementer, the Client type used by SAFE Auth which provides functions like `register()` and `login()`.
+- An `AppClient` implementer, the Client type used by SAFE App which provides functions like `unregistered()`.
 
 ## The Client trait
 
 Defined in [safe_core::client::mod.rs](https://github.com/maidsafe/safe_client_libs/blob/master/safe_core/src/client/mod.rs).
 
-The `Client` trait provides an interface of functionality that its implementors are expected to define. For example, its implementors may need to be able to return the address of the Client Manager, so they must define `cm_addr()`, and so on. Much of the heavy lifting is already defined by the `Client` trait, however, and implementors immediately have access to functions like `get_idata()`, `put_idata()`, and so on, without having to implement them.
+The `Client` trait provides an interface of functionality that its implementers are expected to define. For example, its implementers may contain the address of the Client Manager, so they must define `cm_addr()`, and so on. Much of the heavy lifting is done by the `Client` trait, however, and implementers immediately have access to functions like `get_idata()`, `put_idata()`, and so on, without having to implement them.
 
-Note that this trait extends the `Clone` trait, so all implementors must implement `clone` as well. It also has the `'static` lifetime, so it must be `Sync`. This lets us use Clients safely across threads.
+Note that this trait extends the `Clone` trait, so all implementers must implement `clone` as well. It also has the `'static` lifetime, so implementers must be `Sync`. This lets us use Clients safely across threads.
 
-Functions in SAFE Core expect a generic `Client` as an input, so that they can be called using any implementing type. [Example](https://github.com/maidsafe/safe_client_libs/blob/2e0ac2b49e94d7c3f837be4afcb11498ef10ba0c/safe_core/src/nfs/dir.rs#L19).
+Functions in SAFE Core expect a generic `Client` as an input so that they can be called using any implementing type: [example](https://github.com/maidsafe/safe_client_libs/blob/2e0ac2b49e94d7c3f837be4afcb11498ef10ba0c/safe_core/src/nfs/dir.rs#L19).
 
 ### ClientInner
 
@@ -52,7 +48,7 @@ This Client implements the interface required by `Client`, as well as a `new` fu
 
 Defined in [safe_authenticator::client.rs](https://github.com/maidsafe/safe_client_libs/blob/master/safe_authenticator/src/client.rs).
 
-`AuthClient` is the Authenticator Client. It can be created using the `login()` and `registered()` functions, which can be considered the entrypoints into SAFE Authenticator. These functions themselves are only crate-public, and must be accessed through the corresponding wrappers such as [`Authenticator::login`](https://docs.rs/safe_authenticator/*/safe_authenticator/struct.Authenticator.html#method.login).
+`AuthClient` is the Authenticator Client. It can be created using the `login()` and `registered()` functions, which can be considered the entrypoints into SAFE Authenticator. These functions themselves are only crate-public, and must be accessed through the corresponding wrappers such as [`Authenticator::login`](https://docs.rs/safe_authenticator/0.8.0/safe_authenticator/struct.Authenticator.html#method.login).
 
 It is a wrapper around `ClientInner` as well as `AuthInner`, which are both contained in `Rc<RefCell<>>` so that the `AuthClient` object can be cloned easily. `AuthInner` contains associated fields such as the account, the user credentials, and the session packet version. `AuthClient` provides several functions for getting and setting these fields, in addition to implementing the required interface.
 
