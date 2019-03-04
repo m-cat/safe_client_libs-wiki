@@ -1,5 +1,3 @@
-# GET and PUT reference
-
 ## Background
 
 This page documents which are the functions in the SAFE App API that interface with the network as well as how they do so (GETs and/or mutations). This information may be useful for app developers trying to design an efficient application. Their priority should be to minimize mutations as they are limited for accounts. However, while GETs are unlimited, a developer interested in efficiency should also try to keep network GETs low to minimize latency for the user.
