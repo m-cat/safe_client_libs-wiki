@@ -15,6 +15,10 @@
 
 * [Mutable Data](./Mutable-Data)
 
+## API references
+
+* [GET and PUT reference](./GET-and-PUT-reference)
+
 ## Development tools and CI
 
 * [Testing framework](./Testing-framework)
