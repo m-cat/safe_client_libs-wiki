@@ -14,6 +14,7 @@
 ## Core concepts
 
 * [Mutable Data](./Mutable-Data)
+* [Client trait and implementations](./Client-trait-and-implementations)
 
 ## API references
 
