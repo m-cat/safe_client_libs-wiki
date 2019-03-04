@@ -30,7 +30,7 @@ Note that this trait extends the `Clone` trait, so all implementers must impleme
 
 Functions in SAFE Core expect a generic `Client` as an input so that they can be called using any implementing type: [example](https://github.com/maidsafe/safe_client_libs/blob/2e0ac2b49e94d7c3f837be4afcb11498ef10ba0c/safe_core/src/nfs/dir.rs#L19).
 
-### ClientInner
+### `ClientInner`
 
 Defined in [safe_core::client::mod.rs](https://github.com/maidsafe/safe_client_libs/blob/master/safe_core/src/client/mod.rs).
 
@@ -40,7 +40,7 @@ This inner struct contains fields expected by the trait. This only really exists
 
 Defined in [safe_core::client::core_client.rs](https://github.com/maidsafe/safe_client_libs/blob/master/safe_core/src/client/core_client.rs).
 
-`CoreClient` is a barebones Client type, used solely for testing purposes in SAFE Core, meaning it will never appear in production. It is not strictly needed, but it allows functions which are provided by SAFE Core, such as the NFS functions, to be tested in SAFE Core itself.
+`CoreClient` is a barebones Client type, used solely for testing purposes in SAFE Core, and does not appear in the production API. It is therefore not strictly needed, but it allows functions which are provided by SAFE Core, such as the NFS functions, to be tested in SAFE Core itself.
 
 This Client implements the interface required by `Client`, as well as a `new` function to allow it to be created (the `Client` trait does not provide this, as `AuthClient` and `AppClient` are created in different ways). Apart from that, it is just a wrapper around the `ClientInner` type, with no associated context.
 
