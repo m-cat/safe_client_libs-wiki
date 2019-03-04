@@ -1,5 +1,3 @@
-# Binary compatibility tests
-
 This document gives an overview of the binary compatibility tests: how they are built and when they run in our continuous integration (CI) pipeline. This is meant to be a technical document describing the implementation details. There is no need to run these tests manually -- the idea is that they should run automatically during CI builds.
 
 ## Purpose
