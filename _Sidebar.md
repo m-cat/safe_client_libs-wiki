@@ -19,6 +19,7 @@
 ## API references
 
 * [GET and PUT reference](./GET-and-PUT-reference)
+* [NFS: files](./NFS:-files)
 
 ## Development tools and CI
 
