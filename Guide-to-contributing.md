@@ -15,7 +15,7 @@ Of course, after submitting an Issue you are free to tackle the problem yourself
 
 ## Choosing an Issue
 
-If you want to contribute code but don't know what to work on, we try to always keep some Issues marked `help-wanted` or `good-first-issue`. We also have the tag `easy` for categorizing Issues that are fairly low-effort, which you can tackle if you are short on time or new to programming. We want everyone to be able to contribute!
+If you want to contribute code but don't know what to work on, we try to always keep some Issues marked [`help-wanted`](https://github.com/maidsafe/safe_client_libs/issues?q=is%3Aissue+label%3A%22help+wanted%22+is%3Aopen) or [`good-first-issue`](https://github.com/maidsafe/safe_client_libs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22). We also have the tag [`easy`](https://github.com/maidsafe/safe_client_libs/issues?q=is%3Aissue+is%3Aopen+label%3Aeasy) for categorizing Issues that are fairly low-effort, which you can tackle if you are short on time or new to programming. We want everyone to be able to contribute!
 
 ## Submitting patches (Pull Requests)
 
