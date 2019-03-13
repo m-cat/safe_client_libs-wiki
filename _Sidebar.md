@@ -4,6 +4,7 @@
 
 ## Introductory concepts
 
+* [Introduction to Client Libs](./Introduction-to-Client-Libs)
 * [Building Client Libs](./Building-Client-Libs)
     * [Building for mobile](./Building-for-mobile)
 * [Configuring Client Libs](./Configuring-Client-Libs)
