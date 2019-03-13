@@ -2,6 +2,10 @@ Welcome to the SAFE Client Libs wiki!
 
 This is the official public knowledge base for Client Libs. Please use the sidebar to navigate around.
 
+## Introduction
+
+Please see [Introduction to Client Libs](./Introduction-to-Client-Libs) for a high-level description of the project.
+
 ## Crate graph
 
 This is how all the pieces of the MaidSafe backend stack fit together. Each arrow points from a crate to one of its dependencies.
