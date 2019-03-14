@@ -4,7 +4,7 @@ We are:
 
 - [Marcin Swieczkowski](https://github.com/m-cat)
 - [Nikita Baksalyar](https://github.com/nbaksalyar)
-- [Yogeshwar Murugan](yogeshwar.murugan@maidsafe.net)
+- [Yogeshwar Murugan](https://github.com/Yoga07/)
 
 If you have any questions about any of the libraries, we are happy to help!
 
