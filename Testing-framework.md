@@ -64,7 +64,7 @@ fn testing_ffi() {
 Generally, the usage of the above-mentioned functions follows the same pattern:
 
 ```rust
-call_*(|user_data, callback| ffi_function(..., user_data, callback))`.
+call_*(|user_data, callback| ffi_function(..., user_data, callback))
 ```
 
 Note that the compiler may complain that the type is unknown, in which case you'll need to add a type annotation. Here's a real example (note that the function `mdata_info_random_public` is unsafe, as are most of our FFI functions):
