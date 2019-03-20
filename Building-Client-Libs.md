@@ -22,7 +22,7 @@ git clone https://github.com/maidsafe/safe_client_libs.git
 
 To build one of the libraries, first navigate to its directory: this will be either `safe_core`, `safe_authenticator`, or `safe_app`.
 
-To build the library in debug mode, simply use the command:
+To build the library simply use the command:
 
 ```
 cargo build --release
