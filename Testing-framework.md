@@ -24,8 +24,7 @@ fn testing_ffi() {
     let (tx, rx) = mpsc::channel::<u32>()
 
     // then we convert it into a raw pointer and pass it as a `user_data` argument
-    some_ffi_fn_from_safe_app(&tx as *mut _,
-                              callback);
+    some_ffi_fn_from_safe_app(&tx as *mut _, callback);
 
     // .. then we block the thread execution until we receive the value back:
     let some_value = unwrap!(rx.recv());
@@ -65,10 +64,10 @@ fn testing_ffi() {
 Generally, the usage of the above-mentioned functions follows the same pattern:
 
 ```rust
-call_*(|user_data, callback| ffi_function(user_data, ..., callback))`.
+call_*(|user_data, callback| ffi_function(..., user_data, callback))`.
 ```
 
-Note that the compiler may complain that the type is unknown, in which case you'll need to add a type annotation. Here's a real example (note that the function `mdata_info_random_public` is unsafe, as are all of our FFI functions):
+Note that the compiler may complain that the type is unknown, in which case you'll need to add a type annotation. Here's a real example (note that the function `mdata_info_random_public` is unsafe, as are most of our FFI functions):
 
 ```rust
 let mdata_info: MDataInfo = unsafe { unwrap!(call_1(|ud, cb| mdata_info_random_public(type_tag, ud, cb))) };
