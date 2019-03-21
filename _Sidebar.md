@@ -26,6 +26,8 @@
 
 * [FFI overview](./FFI-overview)
 * [FFI calling conventions](./FFI-calling-conventions)
+* [FFI quirks and utils](./FFI-quirks-and-utils)
+* [FFI Utils wiki](https://github.com/maidsafe/ffi_utils/wiki)
 
 ## Development tools and CI
 
