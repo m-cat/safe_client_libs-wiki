@@ -22,6 +22,10 @@
 * [GET and PUT reference](./GET-and-PUT-reference)
 * [NFS: files](./NFS:-files)
 
+## FFI & languages interoperability
+
+* [FFI overview](./FFI-overview)
+
 ## Development tools and CI
 
 * [Testing framework](./Testing-framework)
