@@ -29,7 +29,7 @@ It is comprised of **six** fields:
     - Deterministic Xor Names are used in cases such as public names where the Xor Names are derived from the human-readable _public names_ themselves (e.g. by hashing them), allowing easier access to that public name's Mutable Data.
 - `tag`: The type tag, a number that is used to differentiate between Mutable Data in the same address space.
     - Some type tags can have special meaning and behaviour. For instance, type tag `0` is reserved for storing _session packets_ (containing users account information).
-    - Type tags 0 to 15,000 are reserved by MaidSafe.
+    - Type tags 0 to 10,000 are [reserved by MaidSafe](https://github.com/maidsafe/rfcs/blob/master/text/0003-reserved-names/0003-reserved-names.md).
 
 - `version`: The Mutable Data version. Every change done to the `MutableData` shell results in a version increment.
     - Shell: All the `MutableData` fields except `data`.
