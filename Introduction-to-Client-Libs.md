@@ -2,8 +2,8 @@ Welcome to SAFE Client Libs!
 
 We are:
 
-- [Marcin Swieczkowski](https://github.com/m-cat)
 - [Lionel Faber](https://github.com/lionel1704/)
+- [Marcin Swieczkowski](https://github.com/m-cat)
 - [Nikita Baksalyar](https://github.com/nbaksalyar)
 - [Yogeshwar Murugan](https://github.com/Yoga07/)
 
