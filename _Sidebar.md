@@ -14,8 +14,9 @@
 
 ## Core concepts
 
-* [Mutable Data](./Mutable-Data)
-* [Client trait and implementations](./Client-trait-and-implementations)
+* [Core data types and APIs](./Core-data-types-and-APIs)
+    * [Mutable Data](./Mutable-Data)
+    * [Client trait and implementations](./Client-trait-and-implementations)
 
 ## API references
 
