@@ -31,7 +31,7 @@ pub unsafe extern "C" fn foreign_function(
 
     catch_unwind_cb(user_data, o_callback, || -> Result<_, TestError> {
         o_callback(user_data.0, FFI_RESULT_OK, input_param * 42);
-        
+
         Ok(())
     })
 }
@@ -68,7 +68,7 @@ For consistency, almost all of our FFI functions are `unsafe`, as the majority o
 
 As you noticed, we return output values by calling a user-provided *callback function* rather than by the usual means (returning a value). There are two reasons for that.
 
-First, the entire Client Libs [core is asynchronous](./Routing-event-loop) and we use *futures* to work with asynchronous I/O & computation in a more simple manner. Because we can't guarantee that an externally-called function will return its result immediately, and because we can't block the caller waiting for a result either, we use the pattern commonly found in C libraries dealing with asynchronicity: callbacks.
+First, the entire Client Libs [core is asynchronous](./The-core-event-loop) and we use *futures* to work with asynchronous I/O and computation in a more simple manner. Because we can't guarantee that an externally-called function will return its result immediately, and because we can't block the caller waiting for a result either, we use the pattern commonly found in C libraries dealing with asynchronicity: callbacks.
 
 Another thing that it helps with is *memory management*, which is a challenging topic when applied to FFI. Consider a simple case when you want to return a structure. You allocate it on a heap and return a pointer to it:
 
@@ -101,9 +101,9 @@ This approach makes it a requirement for a user to *copy* the data they need in 
 
 ### `FfiResult` and `FFI_RESULT_OK`
 
-We don't have a conventional way of transferring native Rust data structures, which have implementation-specific memory layouts. Instead, we need to have predictable structures that other languages, and most importantly C -- the *lingua-franca* & the lowest common denominator of systems languages -- can understand.
+We don't have a conventional way of transferring native Rust data structures, which have implementation-specific memory layouts. Instead, we need to have predictable structures that other languages, and most importantly C -- the *lingua-franca* and the lowest common denominator of systems languages -- can understand.
 
-Because of this, we need to convert a native Rust `Result<..>` into a structure [defined by us](https://docs.rs/ffi_utils/0.11.0/ffi_utils/struct.FfiResult.html) specifically for passing the status of the function completion:
+Because of this, we need to convert a native Rust `Result<..>` into a structure [defined by us](https://docs.rs/ffi_utils/*/ffi_utils/struct.FfiResult.html) specifically for passing the status of the function completion:
 
 ```rust
 struct FfiResult {
@@ -112,7 +112,7 @@ struct FfiResult {
 }
 ```
 
-The `error_code` is a value with a special meaning: `0` means 'success', and non-zero means a failure. The error code is unique and it tells the exact cause of the failure (e.g.: `-301` stands for `ERR_FILE_NOT_FOUND`). Error codes are unique for [safe_app](https://docs.rs/safe_app/0.9.0/safe_app/#constants) and [safe_authenticator](https://docs.rs/safe_authenticator/0.9.0/safe_authenticator/#constants), and generally you *should not* hard-code numbers for error codes: instead, use the exported constants.
+The `error_code` is a value with a special meaning: `0` means 'success', and non-zero means a failure. The error code is unique and it tells the exact cause of the failure (e.g.: `-301` stands for `ERR_FILE_NOT_FOUND`). Error codes are unique for [safe_app](https://docs.rs/safe_app/*/safe_app/#constants) and [safe_authenticator](https://docs.rs/safe_authenticator/*/safe_authenticator/#constants), and generally you *should not* hard-code numbers for error codes: instead, use the exported constants.
 
 `FFI_RESULT_OK` is a handy variant of `FfiResult` which signifies that no error occurred. Its `error_code` is 0 and its `description` is a null pointer -- calling code should always check if it is null before trying to read it.
 
