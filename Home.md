@@ -1,4 +1,4 @@
-Welcome to the SAFE Client Libs wiki!
+Welcome to the **SAFE Client Libs** wiki!
 
 This is the official public knowledge base for Client Libs. Please use the sidebar to navigate around.
 
