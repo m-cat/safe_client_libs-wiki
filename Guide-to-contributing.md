@@ -48,6 +48,12 @@ Submitted PRs are expected to pass continuous integration (CI), which, among oth
 
 Please refer to [Testing Client Libs](./Testing-Client-Libs) and ensure you have appropriately and comprehensively run tests on your branch before submitting.
 
+### Code review
+
+Your PR will be automatically assigned to the team member specified in the `codeowners` file, who may either review the PR himself or assign it to another team member. More often than not, a code submission will be met with review comments and changes requested. It's nothing personal, but nobody's perfect; we leave each other review comments all the time.
+
+After addressing review comments, it is up to your discretion whether you make a new commit or amend the previous one and do a [force-push](https://estl.tech/a-gentler-force-push-on-git-force-with-lease-fb15701218df) to the PR branch. We encourage amending the last commit if there are only minor changes to be made. GitHub now shows diffs for force-pushed commits, making them easy to review, and it keeps the final commit history clean.
+
 ### Deployment
 
 Deployment happens automatically once the test suite has passed and the Pull Request has been merged. Intermediate versions of the libraries are published on S3 for all the platforms we support as Tier 1 (Windows, Ubuntu 18.04, OS X, + Android & iOS).
