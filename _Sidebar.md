@@ -33,4 +33,5 @@
 ## Development tools and CI
 
 * [Testing framework](./Testing-framework)
+* [Continuous integration](./Continuous-integration)
 * [Binary compatibility tests](./Binary-compatibility-tests)
