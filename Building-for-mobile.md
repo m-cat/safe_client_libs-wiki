@@ -43,7 +43,7 @@ To build the toolchain for a particular architecture and android API version:
 Example:
 
 ```
-~/code/android-ndk/build/tools/make_standalone_toolchain.py --arch arm --api 24 --install-dir ~/toolchains/android-24-arm-toolchain
+~/code/android-ndk/build/tools/make_standalone_toolchain.py --arch arm --api 21 --install-dir ~/toolchains/android-21-arm-toolchain
 ```
 
 More info: [Standalone toolchains](https://developer.android.com/ndk/guides/standalone_toolchain)
@@ -55,7 +55,7 @@ To compile Client Libs for different targets, you will need those targets to be 
 For example, to add the Android arm target, run:
 
 ```
-rustup target add arm-linux-androideabi
+rustup target add armv7-linux-androideabi
 ```
 
 More info: [Cross compilation](https://github.com/rust-lang-nursery/rustup.rs#cross-compilation)
@@ -67,15 +67,15 @@ Before cross compilation we must ensure that the required environment variables 
 - The `bin` folder of the NDK standalone toolchain must be added to the `PATH` variable:
 
 ```
-export PATH=$PATH:~/toolchains/android-24-arm-toolchain/bin
+export PATH=$PATH:~/toolchains/android-21-arm-toolchain/bin
 ```
     
 - The `CARGO_TARGET_<TARGET>_LINKER` variable must be set to the the gcc executable of the toolchain:
     
-    For example, for the `arm-linux-androideabi` target the variable to be set will be:
+    For example, for the `armv7-linux-androideabi` target the variable to be set will be:
 
 ```
-export CARGO_TARGET_ARM_LINUX_ANDROIDEABI_LINKER=~/toolchains/android-24-arm-toolchain/bin/arm-linux-androideabi-gcc
+export CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=~/toolchains/android-21-arm-toolchain/bin/arm-linux-androideabi-gcc
 ```
 
 ### Cross compilation
@@ -86,10 +86,10 @@ Once you've completed the above steps we can now compile Client Libs for Android
 cargo build --release --features="use-mock-routing" --target="<required target>"
 ```
 
-For example, to compile SAFE App for `arm-linux-androideabi`, go inside the `safe_app` folder and run:
+For example, to compile SAFE App for `armv7-linux-androideabi`, go inside the `safe_app` folder and run:
 
 ```
-cargo build --release --features="use-mock-routing" --target="arm-linux-androideabi"
+cargo build --release --features="use-mock-routing" --target="armv7-linux-androideabi"
 ```
 
 ### Generating universal native library for iOS
