@@ -31,8 +31,8 @@ To make things as simple as possible, this example didn't demonstrate any error 
 
 In the following example we call from the FFI function into a regular, non-FFI function which returns a `Result`. Let's take a look:
 
-```rs
-use ffi_utils::result::call_result_cb;
+```rust
+use ffi_utils::call_result_cb;
 use ffi_utils::test_utils::TestError;
 use ffi_utils::{catch_unwind_cb, FfiResult, NativeResult, OpaqueCtx, FFI_RESULT_OK};
 use std::os::raw::c_void;
@@ -59,12 +59,14 @@ unsafe extern "C" fn foreign_function2(
     catch_unwind_cb(user_data, o_callback, || -> Result<_, TestError> {
         match multiply_by_42(input_param) {
             Ok(output) => o_callback(user_data.0, FFI_RESULT_OK, output),
-            Err(e) => call_result_cb(Err::<(), _>(e), user_data, o_callback),
+            Err(e) => {
+                call_result_cb!(Err::<(), _>(e), user_data, o_callback);
+            }
         }
 
-         Ok(())
-     })
- }
+        Ok(())
+    })
+}
 ```
 
 As you can see, we call the Rust function `multiply_by_42` which, instead of panicking, returns a `TestError` on multiplication overflow.
@@ -103,7 +105,7 @@ Recall in the example above how our FFI function accepted an `i32` input and ret
 
 Let's take a look at the [`AppExchangeInfo`](https://docs.rs/safe_core/*/safe_core/ipc/req/struct.AppExchangeInfo.html) struct as an example:
 
-```rs
+```rust
 pub struct AppExchangeInfo {
     pub id: String,
     pub scope: Option<String>,
@@ -114,7 +116,7 @@ pub struct AppExchangeInfo {
 
 We can't use this in an FFI function because it contains Rust-style strings as well as an `Option`, neither of which C can understand. For this reason we provide an [FFI version](https://docs.rs/safe_core/*/safe_core/ffi/ipc/req/struct.AppExchangeInfo.html) of this struct:
 
-```rs
+```rust
 #[repr(C)]
 pub struct AppExchangeInfo {
     pub id: *const c_char,
@@ -130,7 +132,7 @@ Notice that the struct is marked `pub` as well as `#[repr(C)]`: this is **very**
 
 To convert from the Rust version to the FFI version, we provide the function `to_repr_c`:
 
-```rs
+```rust
 impl AppExchangeInfo {
     /// Construct FFI wrapper for the native Rust object, consuming self.
     pub fn into_repr_c(self) -> Result<FfiAppExchangeInfo, IpcError> {
@@ -163,7 +165,7 @@ Notice that the `Option` is only converted to a C-style string pointer if it was
 
 To convert in the other direction, we provide `clone_from_repr_c` (which is actually a required method of the `ReprC` trait):
 
-```rs
+```rust
 impl ReprC for AppExchangeInfo {
     type C = *const FfiAppExchangeInfo;
     type Error = IpcError;
@@ -203,7 +205,7 @@ By implementing `ReprC`, we allow this object to be returned in callbacks using 
 
 Finally, it is very important to define a custom `Drop` implementation for the FFI struct:
 
-```rs
+```rust
 impl Drop for AppExchangeInfo {
     #[allow(unsafe_code)]
     fn drop(&mut self) {
