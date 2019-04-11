@@ -24,7 +24,7 @@ This is how all the pieces of the MaidSafe backend stack fit together. Each arro
 
 This was generated using [cargo-deps](https://github.com/m-cat/cargo-deps) and the following command:
 
-```
+```shell
 cargo deps --all-deps --include-orphans --subgraph safe_app safe_app_jni safe_authenticator safe_authenticator_jni safe_core --subgraph-name "SAFE Client Libs" --filter accumulator config_file_handler crust ffi_utils fake_clock lru_time_cache maidsafe_utilities parsec resource_proof routing rust_sodium safe_app safe_app_jni safe_authenticator safe_authenticator_jni safe_bindgen safe_core safe_crypto safe_vault secure_serialisation self_encryption system_uri tokio_utp --manifest-path safe_app/Cargo.toml | dot -Tpng -Nfontname=Iosevka -Gfontname=Iosevka >| safe-client-libs.png
 ```
 

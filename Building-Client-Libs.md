@@ -6,7 +6,7 @@ The latest **stable** version of Rust is required.
 
 If you already have Rust installed, you may need to upgrade to the latest stable:
 
-```
+```shell
 rustup update stable
 ```
 
@@ -14,7 +14,7 @@ rustup update stable
 
 The Client Libs repository can be downloaded either as a zip archive from the [official repository](https://github.com/maidsafe/safe_client_libs) or by using Git:
 
-```
+```shell
 git clone https://github.com/maidsafe/safe_client_libs.git
 ```
 
@@ -24,7 +24,7 @@ To build one of the libraries, first navigate to its directory: this will be eit
 
 To build the library simply use the command:
 
-```
+```shell
 cargo build --release
 ```
 
@@ -32,7 +32,7 @@ This builds the library in release mode, which is how we build our official bina
 
 To run tests:
 
-```
+```shell
 cargo test --release
 ```
 
@@ -52,13 +52,13 @@ Rust supports conditional compilation through a mechanism called features. Featu
 
 To build a library with a feature, pass the `--features` flag:
 
-```
+```shell
 cargo test --release --features "use-mock-routing"
 ```
 
 You can pass multiple features:
 
-```
+```shell
 cargo build --release --features "use-mock-routing testing"
 ```
 

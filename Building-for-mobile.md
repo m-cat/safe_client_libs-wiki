@@ -36,13 +36,13 @@ This generates a universal .a file in the zips (universal as in it works for bot
 
 To build the toolchain for a particular architecture and android API version:
 
-```
+```shell
 <ndk-folder>/build/tools/make_standalone_toolchain.py --arch <architecture> --api <api version> --install-dir <target directory>
 ```
 
 Example:
 
-```
+```shell
 ~/code/android-ndk/build/tools/make_standalone_toolchain.py --arch arm --api 21 --install-dir ~/toolchains/android-21-arm-toolchain
 ```
 
@@ -54,7 +54,7 @@ To compile Client Libs for different targets, you will need those targets to be 
 
 For example, to add the Android arm target, run:
 
-```
+```shell
 rustup target add armv7-linux-androideabi
 ```
 
@@ -66,7 +66,7 @@ Before cross compilation we must ensure that the required environment variables 
 
 - The `bin` folder of the NDK standalone toolchain must be added to the `PATH` variable:
 
-```
+```shell
 export PATH=$PATH:~/toolchains/android-21-arm-toolchain/bin
 ```
     
@@ -74,7 +74,7 @@ export PATH=$PATH:~/toolchains/android-21-arm-toolchain/bin
     
     For example, for the `armv7-linux-androideabi` target the variable to be set will be:
 
-```
+```shell
 export CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=~/toolchains/android-21-arm-toolchain/bin/arm-linux-androideabi-gcc
 ```
 
@@ -82,13 +82,13 @@ export CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=~/toolchains/android-21-arm-t
 
 Once you've completed the above steps we can now compile Client Libs for Android targets:
 
-```
+```shell
 cargo build --release --features="use-mock-routing" --target="<required target>"
 ```
 
 For example, to compile SAFE App for `armv7-linux-androideabi`, go inside the `safe_app` folder and run:
 
-```
+```shell
 cargo build --release --features="use-mock-routing" --target="armv7-linux-androideabi"
 ```
 
@@ -96,7 +96,7 @@ cargo build --release --features="use-mock-routing" --target="armv7-linux-androi
 
 - Add the targets for iOS ARM64 & iOS x64:
 
-```
+```shell
 rustup target add aarch64-apple-ios
 rustup target add x86_64-apple-ios
 ```
@@ -117,6 +117,6 @@ rustup target add x86_64-apple-ios
 
 You can generate SAFE App/Authenticator mock/non-mock binaries for iOS using cargo-script. Remove `--mock` to generate non-mock libs.
 
-```
+```shell
 ./scripts/package.rs --lib --name safe_app/safe_authenticator -d OUTPUT_DIRECTORY --mock -a ios
 ```
