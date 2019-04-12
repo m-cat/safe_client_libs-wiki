@@ -15,7 +15,7 @@ pub fn native_function(input_param: i32) -> Result<i32, Error> {
 When translated to use our foreign calling convention, it looks very different:
 
 ```rust
-use ffi_utils::test_utils::{call_1, TestError};
+use ffi_utils::test_utils::TestError;
 use ffi_utils::{catch_unwind_cb, FfiResult, OpaqueCtx, FFI_RESULT_OK};
 use std::os::raw::c_void;
 
