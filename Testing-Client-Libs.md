@@ -7,7 +7,7 @@ When making changes to the code, please run the appropriate tests, described bel
 If a change is minor or does not involve potential breakage in data or API compatibility, it is not necessary to test against the actual network. In this case, it is enough to run unit tests using mock routing and make sure that they all pass. To do this, you will have to go to the crate you wish to test (e.g. the `safe_core` directory) and execute the following:
 
 ```shell
-cargo test --release --features=use-mock-routing
+cargo test --release --features=mock-network
 ```
 
 This will run all unit tests for the crate.
