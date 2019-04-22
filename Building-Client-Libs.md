@@ -46,20 +46,20 @@ See [Building for mobile](./Building-for-mobile).
 
 Rust supports conditional compilation through a mechanism called features. Features allow us to provide builds with different capabilities. The Client Libs features are:
 
-- `use-mock-routing`: This feature enables Mock Routing, a fake routing network that does not make a connection to the live network. This is what we use when running most of our tests. The entire mock network is stored locally in a file named `MockVault`, which gives us the ability to reproduce conditions of any local mock network. You can find more details on the [Mock vs. non-mock](./Mock-vs.-non-mock) page.
-- `testing`: This feature enables building with test utilities, which include functions for setting up random test clients. Some test utilities, such as the functions that set up routing hooks, also require the `use-mock-routing` flag to be built. More details about the test utilities can be found on the [Testing framework](./Testing-framework) page.
+- `mock-network`: This feature enables Mock Routing, a fake routing network that does not make a connection to the live network. This is what we use when running most of our tests. The entire mock network is stored locally in a file named `MockVault`, which gives us the ability to reproduce conditions of any local mock network. You can find more details on the [Mock vs. non-mock](./Mock-vs.-non-mock) page.
+- `testing`: This feature enables building with test utilities, which include functions for setting up random test clients. Some test utilities, such as the functions that set up routing hooks, also require the `mock-network` flag to be built. More details about the test utilities can be found on the [Testing framework](./Testing-framework) page.
 - `bindings`: This feature enables the generation of bindings for C, C\# and Java so that the Safe Authenticator and Safe App libraries can be natively called from those languages. This feature is not available for Safe Core. More details about this feature can be found on the [Interfacing with other languages & Safe-Bindgen](.) page.
 
 To build a library with a feature, pass the `--features` flag:
 
 ```shell
-cargo test --release --features "use-mock-routing"
+cargo test --release --features "mock-network"
 ```
 
 You can pass multiple features:
 
 ```shell
-cargo build --release --features "use-mock-routing testing"
+cargo build --release --features "mock-network testing"
 ```
 
 ## Docker
