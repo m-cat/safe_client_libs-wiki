@@ -83,13 +83,13 @@ export CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=~/toolchains/android-21-arm-t
 Once you've completed the above steps we can now compile Client Libs for Android targets:
 
 ```shell
-cargo build --release --features="use-mock-routing" --target="<required target>"
+cargo build --release --features="mock-network" --target="<required target>"
 ```
 
 For example, to compile SAFE App for `armv7-linux-androideabi`, go inside the `safe_app` folder and run:
 
 ```shell
-cargo build --release --features="use-mock-routing" --target="armv7-linux-androideabi"
+cargo build --release --features="mock-network" --target="armv7-linux-androideabi"
 ```
 
 ### Generating universal native library for iOS
@@ -103,14 +103,14 @@ rustup target add x86_64-apple-ios
 
 - To manually generate a universal SAFE App mock binary for iOS:
     - Run the following inside the `safe_app` directory:
-`cargo build --release --features="use-mock-routing" --target="aarch64-apple-ios"` and `cargo build --release --features="use-mock-routing" --target="x86_64-apple-ios"`
+`cargo build --release --features="mock-network" --target="aarch64-apple-ios"` and `cargo build --release --features="mock-network" --target="x86_64-apple-ios"`
     - Copy `libsafe_app.a` from `../target/aarch64-apple-ios/release` to a separate directory folder and rename this file to `libsafe_app-arm64.a`
     - Copy `libsafe_app.a` from `../target/x86_64-apple-ios/release` to the same directory as above and rename to `libsafe_app-x64.a`
     - Run the following command in the directory to generate a universal binary: `lipo -create -output libsafe_app.a libsafe_app-arm64.a libsafe_app-x64.a`
 
     - Now you have a new file called `libsafe_app.a` which includes both native binaries.
 
-- Repeat the above without the `use-mock-routing` feature to generate a non-mock SAFE App binary.
+- Repeat the above without the `mock-network` feature to generate a non-mock SAFE App binary.
 - The steps for SAFE Authenticator will be the same, except that the library name will be `libsafe_authenticator.a`.
 
 ### Generating universal libraries using cargo-script
