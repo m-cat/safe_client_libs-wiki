@@ -20,7 +20,7 @@ As opposed to the real libraries, which connect to the public network, the mock 
 
 ### How to build
 
-Follow the instructions at [Building Client Libs](.) and use the `–-features "use-mock-routing"` flag.
+Follow the instructions at [Building Client Libs](.) and use the `–-features "mock-network"` flag.
 
 ### Advantages
 
@@ -32,16 +32,16 @@ For more information on configuring the behavior of the mock libraries (e.g. lif
 
 ## Mock Development
 
-You can use the `mock-routing-feature` to conditionally compile code only for the mock libraries. For example, you can configure code to either use the real `Routing` struct when compiled without `use-mock-routing`, or the the `MockRouting` struct, renamed as `Routing`, when `use-mock-routing` is enabled:
+You can use the `mock-routing-feature` to conditionally compile code only for the mock libraries. For example, you can configure code to either use the real `Routing` struct when compiled without `mock-network`, or the the `MockRouting` struct, renamed as `Routing`, when `mock-network` is enabled:
 
 ```rust
-#[cfg(feature = "use-mock-routing")]
+#[cfg(feature = "mock-network")]
 use self::mock::Routing;
-#[cfg(not(feature = "use-mock-routing"))]
+#[cfg(not(feature = "mock-network"))]
 use routing::Client as Routing;
 ```
 
-The compiler will generally help you along in knowing when and where to use feature flags. If you write a new function that calls `use-mock-routing`-only functions, the compiler will complain that those functions do not exist when you try to compile without `use-mock-routing`. You'll therefore know to either gate the new function with `use-mock-routing`, or to avoid using those functions if your new function needs to be in production.
+The compiler will generally help you along in knowing when and where to use feature flags. If you write a new function that calls `mock-network`-only functions, the compiler will complain that those functions do not exist when you try to compile without `mock-network`. You'll therefore know to either gate the new function with `mock-network`, or to avoid using those functions if your new function needs to be in production.
 
 ### Dependencies
 
@@ -54,7 +54,7 @@ A mock-only dependency can be included as per usual in the `Cargo.toml` file:
 But needs to be feature-gated in `lib.rs`:
 
 ```rust
-#[cfg(feature = "use-mock-routing")]
+#[cfg(feature = "mock-network")]
 #[macro_use]
 extern crate lazy_static;
 ```
@@ -64,16 +64,16 @@ extern crate lazy_static;
 You can configure certain modules to only be included for the mock libraries. The mock routing implementation itself is configured this way:
 
 ```rust
-#[cfg(feature = "use-mock-routing")]
+#[cfg(feature = "mock-network")]
 mod mock;
 ```
 
 ### Functions
 
-You may want to define certain functions only for the mock libraries. For example, the following function, which adds custom hooks to Mock Routing to alter its behavior, will only be compiled if `use-mock-routing` is enabled AND tests are being run:
+You may want to define certain functions only for the mock libraries. For example, the following function, which adds custom hooks to Mock Routing to alter its behavior, will only be compiled if `mock-network` is enabled AND tests are being run:
 
 ```rust
-#[cfg(all(feature = "use-mock-routing", any(test, feature = "testing")))]
+#[cfg(all(feature = "mock-network", any(test, feature = "testing")))]
 /// Allows customising the mock Routing client before registering a new account
 pub fn registered_with_hook<F>(
 ```
@@ -84,7 +84,7 @@ Some tests should only be run on the mock libraries. Generally this applies to a
 
 ```rust
 // Test simulating network disconnects.
-#[cfg(feature = "use-mock-routing")]
+#[cfg(feature = "mock-network")]
 #[test]
 fn simulate_network_disconnect() {
 ```
@@ -94,7 +94,7 @@ fn simulate_network_disconnect() {
 You may wish to publicly export an API only for the mock libraries, e.g. for testing purposes:
 
 ```rust
-#[cfg(feature = "use-mock-routing")]
+#[cfg(feature = "mock-network")]
 pub use self::client::{mock_vault_path, MockRouting};
 ```
 
