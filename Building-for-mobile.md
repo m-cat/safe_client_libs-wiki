@@ -69,9 +69,9 @@ Before cross compilation we must ensure that the required environment variables 
 ```shell
 export PATH=$PATH:~/toolchains/android-21-arm-toolchain/bin
 ```
-    
+
 - The `CARGO_TARGET_<TARGET>_LINKER` variable must be set to the the gcc executable of the toolchain:
-    
+
     For example, for the `armv7-linux-androideabi` target the variable to be set will be:
 
 ```shell
@@ -102,14 +102,11 @@ rustup target add x86_64-apple-ios
 ```
 
 - To manually generate a universal SAFE App mock binary for iOS:
-    - Run the following inside the `safe_app` directory:
-`cargo build --release --features="mock-network" --target="aarch64-apple-ios"` and `cargo build --release --features="mock-network" --target="x86_64-apple-ios"`
+    - Run the following inside the `safe_app` directory: `cargo build --release --features="mock-network" --target="aarch64-apple-ios"` and `cargo build --release --features="mock-network" --target="x86_64-apple-ios"`
     - Copy `libsafe_app.a` from `../target/aarch64-apple-ios/release` to a separate directory folder and rename this file to `libsafe_app-arm64.a`
     - Copy `libsafe_app.a` from `../target/x86_64-apple-ios/release` to the same directory as above and rename to `libsafe_app-x64.a`
     - Run the following command in the directory to generate a universal binary: `lipo -create -output libsafe_app.a libsafe_app-arm64.a libsafe_app-x64.a`
-
     - Now you have a new file called `libsafe_app.a` which includes both native binaries.
-
 - Repeat the above without the `mock-network` feature to generate a non-mock SAFE App binary.
 - The steps for SAFE Authenticator will be the same, except that the library name will be `libsafe_authenticator.a`.
 
