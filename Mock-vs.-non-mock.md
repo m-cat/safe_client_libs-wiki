@@ -97,35 +97,3 @@ You may wish to publicly export an API only for the mock libraries, e.g. for tes
 #[cfg(feature = "mock-network")]
 pub use self::client::{mock_vault_path, MockRouting};
 ```
-
-## Mock Implementation
-
-### Mock Vault
-
-This is a mock implementation of the [vault](https://github.com/maidsafe/safe_vault) and its various operations:
-
-- Storing data (in a local `MockVault` file by default, though this can be configured)
-- Authorising operations like reads and mutations
-- Committing mutations and counting them (limit of 1000 by default)
-
-It can be configured, see "Configuration Parameters" above.
-
-The data stored in the MockVault file can be moved between computers, so an error on an end user's computer can be reproduced locally and investigated by a developer.
-
-### Mock Routing
-
-Has the same interface as real routing but sits on top of the mock vault. All of the operations are mocked, but made to be as realistic as possible, even incurring some delays via `sleep` so that they are not nearly-instantaneous.
-
-Also allows inserting hooks (e.g. overriding a request or response) for testing purposes.
-
-Can simulate disconnects and timeouts for testing of certain things (such as operations recovery, i.e. how the libraries are able to robustly handle network interruptions).
-
-### Mock Account
-
-The mock accounts are handled by the mock vault and are what actually count the mutations performed and mutations available. Each mock account has a different counter for these. The mock account also mocks other account properties such as storing the authenticator key and bumping the version when the key is updated.
-
-### Testing
-
-When testing, instances of `MockRouting` can be created with custom configuration parameters, i.e. to turn off the mutation limit for one test only. See `setup_with_config`. For an example of its usage see the test `low_balance_check`.
-
-Note that by default, a single shared instance of `Vault` is created for all tests, and new instances of `MockRouting` will interface with this shared instance. The `setup_with_config` option will create a separate, custom vault, with e.g. the mutation limit turned off or in-memory storage turned on, so that other tests are not affected.
