@@ -34,9 +34,11 @@ In addition to the common code style, we have our own [coding convention](./FFI+
 
 ## Submitting patches (Pull Requests)
 
-Before submitting code, please either choose an existing Issue, or write your own, describing the problem you are solving. We would like for every PR to have an accompanying Issue, so that we know concretely what the problem is and can track its resolution.
+If you are a complete newbie, click [here](https://github.com/firstcontributions/first-contributions) for an easy-to-follow guide (with pictures!)
 
 We follow the standard procedure for submitting Pull Requests. Please refer to the [official GitHub documentation](https://help.github.com/articles/creating-a-pull-request/) if you are unfamiliar with the procedure. If you still need help, we are more than happy to guide you along!
+
+**Note:** Before submitting code, please either choose an existing Issue, or write your own, describing the problem you are solving. We would like for every PR to have an accompanying Issue, so that we know concretely what the problem is and can track its resolution.
 
 ### Format
 
