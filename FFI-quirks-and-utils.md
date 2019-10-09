@@ -118,7 +118,7 @@ We can't use this in an FFI function because it contains Rust-style strings as w
 
 ```rust
 #[repr(C)]
-pub struct AppExchangeInfo {
+pub struct FfiAppExchangeInfo {
     pub id: *const c_char,
     pub scope: *const c_char,
     pub name: *const c_char,
@@ -206,7 +206,7 @@ By implementing `ReprC`, we allow this object to be returned in callbacks using 
 Finally, it is very important to define a custom `Drop` implementation for the FFI struct:
 
 ```rust
-impl Drop for AppExchangeInfo {
+impl Drop for FfiAppExchangeInfo {
     #[allow(unsafe_code)]
     fn drop(&mut self) {
         unsafe {
@@ -231,6 +231,78 @@ In summary, there are two important things to note here:
 2. **`Option` is represented as null in FFI.**
 
 Finally, not all custom FFI types will carry pointers, and may just be a collection of boolean flags or integer values. In such cases, the conversions are much simpler, and you do not have to manually implement `Drop`.
+
+### Handling vectors
+
+You'll also commonly see vectors in struct fields in the SCL FFI. These are a bit trickier to handle, so let's go through it step by step.
+
+Let's say we have this simple native Rust struct:
+
+```rust
+pub struct MDataKey(
+    pub Vec<u8>,
+);
+```
+
+The equivalent C-representation struct, containing the same information:
+
+```rust
+#[repr(C)]
+#[derive(Debug)]
+pub struct MDataKey {
+    pub key: *const u8,
+    pub key_len: usize,
+    pub key_cap: usize,
+}
+```
+
+This contains all of the internal data of a `Vec`: a pointer to some data, the length of the `Vec`, and the capacity of the `Vec` [[may not be needed soon](https://github.com/maidsafe/ffi_utils/pull/28)].
+
+To convert between native and FFI representation, we use several helper functions from [ffi_utils](https://github.com/maidsafe/ffi_utils/blob/master/src/vec.rs).
+
+To *convert* to C representation, we use `vec_into_raw_parts`:
+
+```rust
+impl MDataKey {
+    /// Construct FFI wrapper for the native Rust object, consuming self.
+    pub fn into_repr_c(self) -> FfiMDataKey {
+        let (key, key_len, key_cap) = vec_into_raw_parts(self.0);
+
+        FfiMDataKey {
+            key,
+            key_len,
+            key_cap,
+        }
+    }
+}
+```
+
+To *clone* from C representation, we use `vec_clone_from_raw_parts`:
+
+```rust
+impl ReprC for MDataKey {
+    type C = *const FfiMDataKey;
+    type Error = ();
+
+    unsafe fn clone_from_repr_c(repr_c: Self::C) -> Result<Self, Self::Error> {
+        let FfiMDataKey { key, key_len, .. } = *repr_c;
+        let key = vec_clone_from_raw_parts(key, key_len);
+
+        Ok(MDataKey(key))
+    }
+}
+```
+
+To *drop* the `Vec` and its data, which is now all owned by the FFI struct, we use the standard library function `Vec::from_raw_parts`:
+
+```rust
+impl Drop for FfiMDataKey {
+    #[allow(unsafe_code)]
+    fn drop(&mut self) {
+        let _ = unsafe { Vec::from_raw_parts(self.key as *mut u8, self.key_len, self.key_cap) };
+    }
+}
+```
 
 ## Opaque handles
 
