@@ -223,12 +223,14 @@ impl Drop for FfiAppExchangeInfo {
 
 In order to drop the pointers that were created with `CString::into_raw`, we have to reverse the operation with `CString::from_raw`, which passes ownership of the data back into the Rust lifetime model, which now knows that it can drop the data when it goes out of scope.
 
+**Note:** You do not need to explicitly drop objects that already clean up their data when going out of scope, such as integers, arrays, and even most structs.
+
 ### Summary
 
 In summary, there are two important things to note here:
 
 1. **All FFI type should own their data.** If the FFI type's pointers pointed to data elsewhere, that data could go out of scope and become invalid. It is thus very important to keep in mind that FFI types keep their own data, preventing such subtle bugs, but you must not forgot to manually clean it up in `Drop`.
-2. **`Option` is represented as null in FFI.**
+1. **`Option` is represented as null in FFI.**
 
 Finally, not all custom FFI types will carry pointers, and may just be a collection of boolean flags or integer values. In such cases, the conversions are much simpler, and you do not have to manually implement `Drop`.
 
@@ -252,11 +254,10 @@ The equivalent C-representation struct, containing the same information:
 pub struct MDataKey {
     pub key: *const u8,
     pub key_len: usize,
-    pub key_cap: usize,
 }
 ```
 
-This contains all of the internal data of a `Vec`: a pointer to some data, the length of the `Vec`, and the capacity of the `Vec` [[may not be needed soon](https://github.com/maidsafe/ffi_utils/pull/28)].
+This contains all of the necessary internal data of a `Vec`: a pointer to its data and the length of the `Vec` (the capacity of the `Vec` is shrunk to fit the length). **Note:** You may still see some old code which includes the capacity as well. Removal of this field has been a [recent change](https://github.com/maidsafe/ffi_utils/pull/28).
 
 To convert between native and FFI representation, we use several helper functions from [ffi_utils](https://github.com/maidsafe/ffi_utils/blob/master/src/vec.rs).
 
@@ -266,12 +267,11 @@ To *convert* to C representation, we use `vec_into_raw_parts`:
 impl MDataKey {
     /// Construct FFI wrapper for the native Rust object, consuming self.
     pub fn into_repr_c(self) -> FfiMDataKey {
-        let (key, key_len, key_cap) = vec_into_raw_parts(self.0);
+        let (key, key_len) = vec_into_raw_parts(self.0);
 
         FfiMDataKey {
             key,
             key_len,
-            key_cap,
         }
     }
 }
@@ -285,7 +285,7 @@ impl ReprC for MDataKey {
     type Error = ();
 
     unsafe fn clone_from_repr_c(repr_c: Self::C) -> Result<Self, Self::Error> {
-        let FfiMDataKey { key, key_len, .. } = *repr_c;
+        let FfiMDataKey { key, key_len } = *repr_c;
         let key = vec_clone_from_raw_parts(key, key_len);
 
         Ok(MDataKey(key))
@@ -293,16 +293,75 @@ impl ReprC for MDataKey {
 }
 ```
 
-To *drop* the `Vec` and its data, which is now all owned by the FFI struct, we use the standard library function `Vec::from_raw_parts`:
+To *drop* the `Vec` and its data, which is now all owned by the FFI struct, we use the standard library function `vec_from_raw_parts`:
 
 ```rust
 impl Drop for FfiMDataKey {
     #[allow(unsafe_code)]
     fn drop(&mut self) {
-        let _ = unsafe { Vec::from_raw_parts(self.key as *mut u8, self.key_len, self.key_cap) };
+        let _ = unsafe { vec_from_raw_parts(self.key as *mut u8, self.key_len) };
     }
 }
 ```
+
+## Calling callbacks
+
+In this section we'd like to clarify some points about calling the user-provided callbacks. For example, let's say we have this FFI function signature, with a callback called `o_cb`:
+
+```rust
+/// Returns the name of the app's container.
+#[no_mangle]
+pub unsafe extern "C" fn app_container_name(
+    app_id: *const c_char,
+    user_data: *mut c_void,
+    o_cb: extern "C" fn(
+        user_data: *mut c_void,
+        result: *const FfiResult,
+        container_name: *const c_char,
+    ),
+)
+...
+```
+
+As opposed to creating an FFI object, where we pass ownership of data to the new object (see above), we do not pass owned data to the callback (unless it is a `Copy` type). Instead, we pass *pointers* to the data, and the caller is expected to make a copy of the data within the callback. For this reason, it's vitally important to make sure that the data lives long enough -- that is, at least until the callback has completed.
+
+For example, this is not correct, as the pointed-to data (created by `CString::new`) may be dropped:
+
+```rust
+...
+{
+    catch_unwind_cb(user_data, o_cb, || -> Result<_, AppError> {
+        let name = safe_core::app_container_name(
+            CStr::from_ptr(app_id).to_str()?,
+        );
+        o_cb(user_data, FFI_RESULT_OK, CString::new(name)?.as_ptr());
+        Ok(())
+    })
+}
+```
+
+Instead, we need to make sure that the data lives long enough -- in this case, binding the result of `CString::new` to a variable:
+
+```rust
+...
+{
+    catch_unwind_cb(user_data, o_cb, || -> Result<_, AppError> {
+        let name = CString::new(safe_core::app_container_name(
+            CStr::from_ptr(app_id).to_str()?,
+        ))?;
+        o_cb(user_data, FFI_RESULT_OK, name.as_ptr());
+        Ok(())
+    })
+}
+```
+
+**Note:** When passing a `Vec` to a callback, it is also important to use the `.as_safe_ptr()` method instead of `.as_ptr()`:
+
+```rust
+o_cb(user_data, FFI_RESULT_OK, v.as_safe_ptr(), v.len());
+```
+
+See [`SafePtr`](https://docs.rs/ffi_utils/*/ffi_utils/trait.SafePtr.html) for more details.
 
 ## Opaque handles
 
