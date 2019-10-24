@@ -12,6 +12,8 @@ This is how all the pieces of the MaidSafe backend stack fit together. Each arro
 
 ![safe_app dependencies](safe-client-libs.png)
 
+_Last updated Feb 24_
+
 **Legend:**
 * Box node: top-level crate (`safe_app`)
 * Black: normal dependencies
