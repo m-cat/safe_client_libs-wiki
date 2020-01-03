@@ -12,6 +12,7 @@
     * [Mock implementation](./Mock-implementation)
 * [Guide to contributing](./Guide-to-contributing)
 * [Testing Client Libs](./Testing-Client-Libs)
+* [Export strategy](./Export-strategy)
 
 ## Core concepts
 
