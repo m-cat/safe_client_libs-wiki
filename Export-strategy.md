@@ -40,7 +40,6 @@ use futures::sync::mpsc;
 
 The same point about blank lines applies to `pub mod`. Compare
 
-
 ```rust
 pub mod entries;
 pub mod entry_actions;
@@ -63,3 +62,33 @@ pub mod permissions;
 #[cfg(test)]
 mod tests;
 ```
+
+## Exporting FFI objects
+
+There is a very specific export format we require for our FFI modules so that all FFI objects can be parsed by SAFE Bindgen. (Ideally, we would modify SAFE Bindgen to be able to detect these modules automatically, but we haven't done this yet.)
+
+The format is simple: for every FFI module, we must `pub use` it in `lib.rs` and specify `*` to include all items from the module. For example, here is our FFI export block for `safe_authenticator`:
+
+```rust
+// Export FFI interface
+
+pub use crate::ffi::apps::*;
+pub use crate::ffi::errors::codes::*;
+pub use crate::ffi::ipc::*;
+pub use crate::ffi::logging::*;
+pub use crate::ffi::*;
+```
+
+**Note:** to double-check which modules SAFE Bindgen will parse, you can run:
+
+```shell
+cargo build --features bindings -vv
+```
+
+## Re-exports in SAFE App
+
+One final note. In SAFE App, we have a section in `lib.rs` that re-exports some functionality from other crates, mostly SAFE Core. By re-exporting certain things, we try to make SAFE App feature-complete with respect to the Rust-only API.
+
+We do this because while the FFI API is complete, someone using the Rust API in SAFE App would not be able to access all of the same functionality of the FFI API without also specifying SAFE Core as a dependency.
+
+**Note:** we intend to one day make each function in the FFI API a wrapper around the corresponding Rust functions, and provide equivalent Native and FFI APIs. This is another thing we haven't had time to plan and implement yet.
