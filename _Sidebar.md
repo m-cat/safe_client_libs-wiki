@@ -12,13 +12,13 @@
     * [Mock implementation](./Mock-implementation)
 * [Guide to contributing](./Guide-to-contributing)
 * [Testing Client Libs](./Testing-Client-Libs)
-* [Export strategy](./Export-strategy)
 
 ## Core concepts
 
 * [Core data types and APIs](./Core-data-types-and-APIs)
     * [Mutable Data](./Mutable-Data)
     * [Client trait and implementations](./Client-trait-and-implementations)
+* [Export strategy](./Export-strategy)
 
 ## API references
 
