@@ -1,3 +1,5 @@
+**Note:** This document is out of date. We are almost finished migrating to GitHub Actions, and are only using Travis for the binary compatibility tests.
+
 In Client Libs we use **Continuous Integration**, or **CI**, to ensure the correctness and robustness of our released builds. You can think of CI as a pipeline of automated tasks that occur when a Pull Request is [raised or modified](https://github.com/maidsafe/safe_client_libs/wiki/Guide-to-contributing#submitting-patches-pull-requests) or when code is pushed to master. At the core of this pipeline is a full [build of the code](https://github.com/maidsafe/safe_client_libs/wiki/Building-Client-Libs) which makes sure that committed code is able to build without error. We also perform, among other things, a comprehensive [run of the test suite](https://github.com/maidsafe/safe_client_libs/wiki/Testing-Client-Libs) to make sure the new code did not break any tests.
 
 ## Benefits
