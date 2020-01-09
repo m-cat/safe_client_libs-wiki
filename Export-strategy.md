@@ -79,6 +79,8 @@ pub use crate::ffi::logging::*;
 pub use crate::ffi::*;
 ```
 
+Only module paths starting with `ffi` (`crate` in the path is ignored by SAFE Bindgen) will get picked up.
+
 **Note:** to double-check which modules SAFE Bindgen will parse, you can run:
 
 ```shell
