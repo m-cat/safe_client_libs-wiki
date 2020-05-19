@@ -10,7 +10,7 @@ Please see [Introduction to Client Libs](./Introduction-to-Client-Libs) for a hi
 
 This is how all the pieces of the MaidSafe backend stack fit together. Each arrow points from a crate to one of its dependencies.
 
-[[https://github.com/maidsafe/safe_client_libs/blob/master/safe-client-libs.png|alt=safe_app dependencies]]
+[[https://github.com/maidsafe/safe_client_libs/blob/png_generator/safe-client-libs.png|alt=safe_app dependencies]]
 
 _Last updated Feb 24 2019_
 
