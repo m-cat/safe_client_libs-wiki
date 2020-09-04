@@ -4,7 +4,7 @@ This is the official public knowledge base for Client Libs. Please use the sideb
 
 ## Introduction
 
-Please see [Introduction to Client Libs](./Introduction-to-Client-Libs) for a high-level description of the project.
+Please see [Introduction to Client Libs](./Introduction-to-Client-Libs.md) for a high-level description of the project.
 
 ## Crate graph
 
